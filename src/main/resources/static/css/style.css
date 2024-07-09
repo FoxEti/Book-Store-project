@@ -1,0 +1,338 @@
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-bar {
+    background-color: #333;
+    overflow: hidden;
+    display: flex;
+    justify-content: center; /* Center the navigation items */
+    align-items: center;
+    position: relative;
+}
+
+.nav-bar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.nav-bar li {
+    float: left;
+
+}
+.nav-bar ul li {
+    display: inline;
+}
+
+.nav-bar ul li a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.nav-bar ul li a:hover {
+    background-color: #ddd;
+    color: black;
+}
+.container-book-table {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+table.book-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    align-items: center;
+}
+
+table.book-table th, table.book-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+table.book-table th {
+    background-color: #f2f2f2;
+}
+
+table.book-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table.book-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.book-image {
+    max-width: 100px;
+    max-height: 150px;
+}
+
+.nav-bar li a, .nav-bar li form {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.nav-bar li a:hover, .nav-bar li form:hover {
+    background-color: #111;
+}
+
+.nav-bar li form {
+    margin: 0;
+}
+
+.nav-bar li form input[type="submit"] {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 14px 20px;
+    font-size: 16px;
+}
+
+.nav-bar li form input[type="submit"]:hover {
+    background-color: #111;
+}
+
+h1 {
+    margin: 20px;
+    color: #333;
+}
+
+p {
+    margin: 20px;
+}
+
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    padding: 10px;
+    border: none;
+    background-color: #333;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #555;
+}
+
+.error, .logout {
+    color: red;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.logout {
+    color: green;
+}
+.nav-user {
+    margin-left: auto;
+    padding-right: 20px;
+}
+
+.username-circle {
+    display: inline-block;
+    width: 70px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    background-color: #555;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.final-price {
+    text-align: left;
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: center; /* Center-align form elements */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px; /* Ensure consistent font size */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    width: 48%;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    width: 48%;
+}
+.btn:hover {
+    opacity: 0.9;
+}
+.error {
+    color: red;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.logout {
+    color: green;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.container-add-book {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    max-width: 400px;
+    text-align: center;
+}
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    text-align: left;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-visible {
+    display: block; /* Make the button visible */
+}
+
+.cart-hidden {
+    display: none; /* Hide the button visually */
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+input[type="text"],
+input[type="password"],
+select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    width: 100%;
+}
+
+.order-details {
+    margin: 20px;
+}
+.order-details table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+.order-details th, .order-details td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+.order-details img {
+    max-width: 100px;
+    max-height: 100px;
+}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <ul>
+        <li><a th:href="@{/home}">Home</a></li>
+        <li><a th:href="@{/shopping}">Shopping</a></li>
+
+        <!-- Conditional rendering based on user authentication -->
+        <li th:if="${#authorization.expression('isAuthenticated() and !hasRole(''ADMIN'')')}">
+            <a th:href="@{/cart}">Cart</a>
+        </li>
+
+        <li th:if="${#authorization.expression('isAuthenticated() and hasRole(''ADMIN'')')}">
+            <a th:href="@{/admin}">Admin</a>
+        </li>
+
+
+        <li th:if="${#authorization.expression('!isAuthenticated()')}">
+            <a th:href="@{/login}">Login</a>
+        </li>
+
+        <li th:if="${#authorization.expression('!isAuthenticated()')}">
+            <a th:href="@{/register}">Register</a>
+        </li>
+
+        <!-- Logout form -->
+        <li th:if="${#authorization.expression('isAuthenticated()')}">
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Sign Out"/>
+            </form>
+        </li>
+
+        <!-- Display username if authenticated -->
+        <li class="nav-user" th:if="${#authorization.expression('isAuthenticated()')}">
+            <span class="username-circle" th:text="${#authentication.name}"></span>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-book-table">
+    <h1>Edit Shopping List</h1>
+
+    <div class="actions-search-field">
+        <input type="text" id="searchField" placeholder="Search by book name, author or category" style="width: 30%;"/>
+        <input type="number" id="minPrice" placeholder="Min Price" style="width: 10%;"/>
+        <input type="number" id="maxPrice" placeholder="Max Price" style="width: 10%;"/>
+        <button id="searchButton">Search</button>
+        <button id="addBookButton" type="button">Add new Book</button>
+    </div>
+
+    <table class="book-table">
+        <thead>
+        <tr>
+            <th>Book</th>
+            <th>Title</th>
+            <th>Book's details</th>
+            <th>Price</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}" th:id="'book-item-'+${book.id}">
+            <td><img th:src="@{${book.imageUrl}}" alt="Book Image" class="book-image"/></td>
+            <td th:text="${book.title}"></td>
+            <td>
+                <a th:href="@{/bookDetails/{id}(id=${book.id})}">more details</a>
+            </td>
+            <td th:text="${book.price}"></td>
+            <td>
+                <button id="editButton" class="btn btn-primary" th:onclick="'getDetailsBook(' + ${book.id} + ')'">Edit
+                    book
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-primary" th:onclick="'removeBook(' + ${book.id} + ')'">Remove Book</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Add this form below the existing content in the container-book-table div -->
+    <div id="addBookForm" style="display:none;">
+        <h2>Add New Book</h2>
+        <form th:action="@{/admin/book}" method="post">
+            <input type="hidden" id="id" name="id" value="0"/>
+            <label for="imageUrl">Image URL:</label>
+            <input type="text" id="imageUrl" name="imageUrl" placeholder="Enter Image URL" required/><br/>
+
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" placeholder="Enter Title" required/><br/>
+
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" placeholder="Enter Author" required/><br/>
+
+            <label for="price">Price:</label>
+            <input type="number" step="0.01" id="price" name="price" placeholder="Enter Price" required/><br/>
+
+            <label for="detailsBook">Details:</label>
+            <input type="text" id="detailsBook" name="detailsBook" placeholder="Enter Details" required/><br/>
+
+            <label for="categoryId">Category:</label>
+            <select id="categoryId" name="categoryId" required>
+                <option value="">Select Category</option>
+                <option value="1">Children</option> <!-- ID 1 corresponds to 'Children' -->
+                <option value="2">Youth</option> <!-- ID 2 corresponds to 'Youth' -->
+                <option value="3">Adults</option> <!-- ID 3 corresponds to 'Adults' -->
+            </select><br/>
+
+            <label for="stockBook">Stock:</label>
+            <input type="number" id="stockBook" name="stockBook" placeholder="Enter Stock" required/><br/>
+
+            <button type="submit">Add Book</button>
+            <button type="button" id="cancelAddBook">Cancel</button>
+        </form>
+    </div>
+
+    <div id="editBookForm" style="display:none;">
+        <h2>Edit Book</h2>
+        <form th:action="@{/admin/book}" method="post">
+            <input type="hidden" id="hdnBookId" name="id"/>
+            <label for="imageUrl">Image URL:</label>
+            <input type="text" id="txtEditImageUrl" name="imageUrl" required/><br/>
+
+            <label for="title">Title:</label>
+            <input type="text" id="txtEditTitle" name="title" required/><br/>
+
+            <label for="author">Author:</label>
+            <input type="text" id="txtEditAuthor" name="author" required/><br/>
+
+            <label for="price">Price:</label>
+            <input type="number" step="0.01" id="txtEditPrice" name="price" placeholder="Enter Price" required/><br/>
+
+            <label for="detailsBook">Details:</label>
+            <input type="text" id="txtEditDetailsBook" name="detailsBook" required/><br/>
+
+            <label for="editCategoryId">Category:</label>
+            <select id="editCategoryId" name="categoryId" required>
+                <option value="">Select Category</option>
+                <option value="1">Children</option> <!-- ID 1 corresponds to 'Children' -->
+                <option value="2">Youth</option> <!-- ID 2 corresponds to 'Youth' -->
+                <option value="3">Adults</option> <!-- ID 3 corresponds to 'Adults' -->
+            </select><br/>
+
+            <label for="stockBook">Stock:</label>
+            <input type="number" id="txtEditStockBook" name="stockBook" required/><br/>
+
+            <button type="submit">Save</button>
+            <button type="button" id="editCancelAddBook">Cancel</button>
+        </form>
+    </div>
+
+</div>
+
+<script th:inline="javascript">
+    function getDetailsBook(bookId) {
+        fetch(`/detailsBook/${bookId}`, {
+            method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': [[${_csrf.token}]]
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse the JSON response
+                } else {
+                    console.error("Error edit book:", response.statusText);
+                }
+            })
+            .then(data => {
+                // Populate form fields with the fetched data
+                document.getElementById('hdnBookId').value = bookId;
+                document.getElementById('txtEditImageUrl').value = data.imageUrl;
+                document.getElementById('txtEditTitle').value = data.title;
+                document.getElementById('txtEditAuthor').value = data.author;
+                document.getElementById('txtEditPrice').value = data.price;
+                document.getElementById('txtEditDetailsBook').value = data.detailsBook;
+                document.getElementById('editCategoryId').value = data.category.id;
+                document.getElementById('txtEditStockBook').value = data.stockBook;
+
+                // Display the edit form
+                document.getElementById('editBookForm').style.display = 'block';
+            })
+            .catch(error => {
+                console.error("Error edit book:", error);
+            });
+    }
+
+    document.getElementById('editCancelAddBook').addEventListener('click', function () {
+        document.getElementById('editBookForm').style.display = 'none';
+    });
+
+    // Show add book form
+    document.getElementById('addBookButton').addEventListener('click', function () {
+        document.getElementById('addBookForm').style.display = 'block';
+    });
+
+    // Cancel add book form
+    document.getElementById('cancelAddBook').addEventListener('click', function () {
+        document.getElementById('addBookForm').style.display = 'none';
+    });
+
+    function removeBook(bookId) {
+        fetch(`/removeBook/${bookId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': [[${_csrf.token}]]
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Book removed successfully!");
+                    document.getElementById(`book-item-${bookId}`).remove();
+                } else {
+                    console.error("Error deleting book:", response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error("Error deleting book:", error);
+            });
+    }
+
+    document.getElementById('searchButton').addEventListener('click', function () {
+        const keyword = document.getElementById('searchField').value;
+        const minPrice = document.getElementById('minPrice').value;
+        const maxPrice = document.getElementById('maxPrice').value;
+
+        let url = '/admin?';
+
+        if (keyword) {
+            url += 'keyword=' + encodeURIComponent(keyword) + '&';
+        }
+
+        if (minPrice) {
+            url += 'minPrice=' + encodeURIComponent(minPrice) + '&';
+        }
+
+        if (maxPrice) {
+            url += 'maxPrice=' + encodeURIComponent(maxPrice) + '&';
+        }
+
+        window.location.href = url.slice(0, -1); // Remove trailing '&'
+    });
+
+    function getCategoryNameById(categoryId) {
+        const categories = {
+            1: "Children",
+            2: "Youth",
+            3: "Adults"
+        };
+        return categories[categoryId] || "Unknown";
+    }
+</script>
+
+</body>
+</html>
